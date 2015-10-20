@@ -4,4 +4,14 @@ class WelcomeController < ApplicationController
 
   def about
   end
+<<<<<<< HEAD
+=======
+  
+  def contacts
+  end
+  
+  def faq
+  end
+  
+>>>>>>> checkpoint-26-Testing
 end

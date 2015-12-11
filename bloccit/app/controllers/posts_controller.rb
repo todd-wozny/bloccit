@@ -17,6 +17,8 @@ class PostsController < ApplicationController
      @topic = Topic.find(params[:topic_id])
      @post = @topic.posts.build(post_params)
      @post.user = current_user
+     @post.labels = Label.update_labels(params[:post][:labels])
+     @post.rating = Rating.update_rating(params[:post][:rating])
 
 
      if @post.save
@@ -40,6 +42,7 @@ class PostsController < ApplicationController
 
      if @post.save
        @post.labels = Label.update_labels(params[:post][:labels])
+       @post.rating = Rating.update_rating(params[:post][:rating])
        flash[:notice] = "Post was updated."
       redirect_to [@post.topic, @post]
      else

@@ -19,6 +19,11 @@
          <%= f.label :description %>
          <%= f.text_area :description, rows: 8, class: 'form-control', placeholder: "Enter topic description" %>
        </div>
+       
+       <div class="form-group">
+         <%= render partial: 'ratings/form', locals: { f: f, r: @topic.rating } %>
+       </div>
+       
        <div class="form-group">
          <%= f.label :public, class: 'checkbox' do %>
            <%= f.check_box :public %> Public topic

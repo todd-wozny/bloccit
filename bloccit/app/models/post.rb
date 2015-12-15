@@ -7,6 +7,7 @@ class Post < ActiveRecord::Base
   has_many :labelings, as: :labelable
   has_many :labels, through: :labelings
   belongs_to :rating
+  after_create :create_favorite
 
   default_scope { order('rank DESC') }
   scope :ordered_by_title, -> { order('title DESC') }
@@ -35,4 +36,10 @@ class Post < ActiveRecord::Base
      new_rank = points + age_in_days
      update_attribute(:rank, new_rank)
    end
+   
+   def create_favorite
+    Favorite.create(post: self, user: self.user)
+    FavoriteMailer.new_post(self).deliver_now
+   end
+   
 end

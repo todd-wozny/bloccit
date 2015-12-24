@@ -17,9 +17,9 @@
      end
  
      sentences.join(" ")
-   end
+    end
  
- # #7
+ 
    def random_sentence
      strings = []
      rand(3..8).times do
@@ -30,7 +30,7 @@
      sentence.capitalize << "."
    end
  
- # #8
+ 
    def random_word
      letters = ('a'..'z').to_a
      letters.shuffle!

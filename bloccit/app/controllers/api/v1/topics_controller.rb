@@ -5,22 +5,34 @@
  
    def index
      topics = Topic.all
-     render json: topics.to_json, status: 200
+     render json: topics.to_json(include: :posts), status: 200
    end
  
    def show
      topic = Topic.find(params[:id])
-     render json: topic.to_json, status: 200
+     render json: topics.to_json(include: :posts), status: 200
    end
    
     def update
      topic = Topic.find(params[:id])
- 
+  
      if topic.update_attributes(topic_params)
        render json: topic.to_json, status: 200
      else
        render json: {error: "Topic update failed", status: 400}, status: 400
      end
+    end
+   
+   def create_post
+    topic = Topic.find(params[:id])
+    post = topic.posts.build(post_params)
+    post.user = @current_user
+
+    if post.save
+      render json: post.to_json, status: 200
+    else
+      render json: {error: "Post create failed", status: 400}, status: 400
+    end
    end
  
    def create
@@ -47,6 +59,10 @@
    private
    def topic_params
      params.require(:topic).permit(:name, :description, :public)
+   end
+   
+   def post_params
+     params.require(:post).permit(:title, :body)
    end
    
  end
